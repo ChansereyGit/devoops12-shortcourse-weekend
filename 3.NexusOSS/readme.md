@@ -18,4 +18,42 @@ docker exec nexus cat /nexus-data/admin.password
 -> Configure admin credentials 
 -> Configure domain names 
     - domain for nexus ui 
-    - domain for container registry 
+    - domain for container registry
+
+
+```bash 
+sudo apt install nginx -y 
+
+
+sudo systemctl status nginx 
+sudo systemctl start nginx 
+sudo systemctl enable nginx 
+```
+- Linkingg configuration file to the right location of nginx service 
+```bash
+
+ln -s <original> <shortcut>
+
+sudo ln -s /home/kk/devoops12-shortcourse-weekend/3.NexusOSS/config/nexus.conf /etc/nginx/conf.d/
+
+
+sudo ln -s /home/kk/devoops12-shortcourse-weekend/3.NexusOSS/config/registry.conf /etc/nginx/conf.d/
+
+
+
+sudo nginx -t 
+sudo nginx -s reload 
+sudo systemctl restart nginx 
+
+
+# installing certbot that support nginx module 
+sudo apt update
+sudo apt install certbot python3-certbot-nginx
+
+
+# need interaction , choose your domain , yes , no 
+sudo certbot --nginx 
+
+sudo certbot --nginx -d domain.name
+
+```
