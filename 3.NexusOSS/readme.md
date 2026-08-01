@@ -53,7 +53,40 @@ sudo apt install certbot python3-certbot-nginx
 
 # need interaction , choose your domain , yes , no 
 sudo certbot --nginx 
-
 sudo certbot --nginx -d domain.name
+
+
+
+
+```
+## Testing pushing image in our own repo 
+
+go to Realms setting in Security Section , and Add 
+Docker Bearer Token .. 
+```bash
+docker login -u admin registry.anajak-khmer.site
+
+
+docker tag spring-app:latest \
+    registry.anajak-khmer.site/spring-app:v1.0.1
+
+
+docker push registry.anajak-khmer.site/spring-app:v1.0.0
+
+docker pull registry.anajak-khmer.site/spring-app:v1.0.0
+ 
+```
+
+## Working with user and role 
+- Creating another user in order to use the credential to push images
+
+
+
+- docker_admin : user 
+- docker_pull : user 
+
+```bash 
+docker logout registry.anajak-khmer.site
+docker login -u docker_pull registry.anajak-khmer.site
 
 ```
