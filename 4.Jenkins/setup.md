@@ -14,4 +14,8 @@ echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
   /etc/apt/sources.list.d/jenkins.list > /dev/null
 sudo apt update
 sudo apt install jenkins
+
+
+sudo ln -s /home/kk/devoops12-shortcourse-weekend/4.Jenkins/jenkins.conf /etc/nginx/conf.d/
+
 ```
