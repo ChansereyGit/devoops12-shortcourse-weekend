@@ -21,6 +21,8 @@ pipeline {
             steps {
                 
                sh """
+                docker stop reactjs-app || true 
+                docker rm reactjs-app || true 
                 docker run -dp 3000:80 --name reactjs-app jenkins-react:latest 
                """
             }
