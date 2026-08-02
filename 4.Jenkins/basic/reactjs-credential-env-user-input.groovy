@@ -63,14 +63,40 @@ pipeline {
          stage('Deploy') {
             steps {
 
+            script{
+                def userInput= input(
+                    id: "deployconfig", 
+                    message: "choose envrionment for your deployment", 
+                    parameters:[
+                        choice(
+                            name:"ENVIRONMENT", 
+                            choices: ["Local","Stagging","Production"], 
+                            description: "Environment for your deployment"
+                        )
+                    ]
+    
+                )
 
+                if(userInput=="Local"){
+                    echo "Deploy on the jenkins server "
+                     sh """
+                        docker stop reactjs-app || true 
+                        docker rm reactjs-app || true 
+                        docker run -dp 3000:80 --name reactjs-app ${FULL_IMG} 
+                    """
+                }else if(userInput=="Stagging"){
+                    echo "Deploy on Stag environment "
+                    // your code here 
+
+                }else {
+                    // production 
+                    echo "Deploy on the Production Environment! "
+                    // your code here
+                }
+            }
                 
                 
-               sh """
-                docker stop reactjs-app || true 
-                docker rm reactjs-app || true 
-                docker run -dp 3000:80 --name reactjs-app ${FULL_IMG} 
-               """
+              
             }
         }
 
