@@ -31,7 +31,7 @@ pipeline {
                         sh """
 
                         ${scannerHome}/bin/sonar-scanner \
-                            -Dsonar.projectName=${projectName} \
+                            -Dsonar.projectName="${projectName}" \
                             -Dsonar.projectKey=${projectKey} \
                             -Dsonar.projectVersion=${projectVersion}
 
@@ -43,7 +43,25 @@ pipeline {
 
         } 
         // wait to get result Passed or Failed when scan is done
-       
+        stage("Wait for QualityGate"){
+            
+            steps{
+                script{
+                    def qg = waitForQualityGate() 
+                    if(qg.status !='OK'){
+                        echo "Quality Gate is Failed !! "
+                        // send telegram to team to fix 
+                        currentBuild.result = 'FAILURE'
+                        error("Quality Gate Failed cannot proceced")
+                        return // to stop the pipeline
+
+                    }else{
+                        echo "Quality Gate is Passed ! "
+                        currentBuild.result='SUCCESS'
+                    }
+                }
+            }
+        }
          stage('Build') {
             steps {
                sh "ls -lrt "
@@ -70,3 +88,7 @@ pipeline {
       
     }
 }
+
+
+
+
