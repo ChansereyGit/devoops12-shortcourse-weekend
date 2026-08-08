@@ -19,3 +19,15 @@ sudo apt install jenkins
 sudo ln -s /home/kk/devoops12-shortcourse-weekend/4.Jenkins/jenkins.conf /etc/nginx/conf.d/
 
 ```
+
+
++ Download the agent to run 
+```bash 
+# run agent normal mode 
+curl -sO https://jenkins.anajak-khmer.site/jnlpJars/agent.jar;java -jar agent.jar -url https://jenkins.anajak-khmer.site/ -secret your-secret -name slave1 -webSocket -workDir "/home/kk/jenkins"
+
+
+# run in it backgroup 
+curl -sO https://jenkins.anajak-khmer.site/jnlpJars/agent.jar;java -jar agent.jar -url https://jenkins.anajak-khmer.site/ -secret your-secret -name slave1 -webSocket -workDir "/home/kk/jenkins" &
+```
+
