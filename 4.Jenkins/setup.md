@@ -31,3 +31,11 @@ curl -sO https://jenkins.anajak-khmer.site/jnlpJars/agent.jar;java -jar agent.ja
 curl -sO https://jenkins.anajak-khmer.site/jnlpJars/agent.jar;java -jar agent.jar -url https://jenkins.anajak-khmer.site/ -secret your-secret -name slave1 -webSocket -workDir "/home/kk/jenkins" &
 ```
 
+
+```bash
+
+curl https://jenkeo:token@jenkins.anajak-khmer.site/job/docker-pipeline/build?token=12345
+
+```
+
+ or /buildWithParameters?token=TOKEN_NAME

@@ -5,6 +5,9 @@ pipeline{
         IMG_NAME="jenkins-g12-reactjs"
         DH_USER="lyvanna544"
         FULL_IMG="${DH_USER}/${IMG_NAME}:${TAG}"
+        // for telegram message
+         CHAT_ID="your-telegram-chat-id"
+        TOKEN="your-bot-token"
     }
     stages{
         stage("Checkout"){
@@ -47,7 +50,42 @@ pipeline{
                 """
             }
         }
-
-
     }
+
+ post{
+    always{
+        echo "This always run regardless of the pipeline result"
+    }
+       failure{
+        echo "Pipeline is failure! "
+        script{
+        def message = """
+Jenkins pipeline result in failure !! 
+Your pipeline is failed!
+
+        """
+        sendTelegramMessage("${message}", "${TOKEN}","${CHAT_ID}")
+
+        }
+    }
+    success{
+        echo "Pipeline is success! "
+        script{
+        def message = """
+Congratulation !! 
+Your pipeline is success!
+
+        """
+        sendTelegramMessage("${message}", "${TOKEN}","${CHAT_ID}")
+
+        }
+    }
+ }
+}
+
+def sendTelegramMessage(String message, String token, String chatId){
+    sh """
+     curl -s -X POST "https://api.telegram.org/bot${token}/sendMessage" -d chat_id="${chatId}" -d parse_mode="Markdown"  -d text="${message}"
+    """
+
 }
