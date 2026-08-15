@@ -1,0 +1,17 @@
+- name: NFS Client Setup Playbook 
+  hosts: nfs-clients 
+  become: true 
+  tasks: 
+    - name: Update apt packages 
+      apt: 
+        update_cache: yes 
+    - name: Install common packages 
+      apt: 
+        name: 
+          - fish 
+          - tree 
+        state: present 
+    - name: Install Nfs client 
+      apt: 
+        name: nfs-common 
+        state: present 
