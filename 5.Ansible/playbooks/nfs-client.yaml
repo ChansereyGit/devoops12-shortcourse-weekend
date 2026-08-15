@@ -1,17 +1,23 @@
 - name: NFS Client Setup Playbook 
   hosts: nfs-clients 
   become: true 
+  # vars_files: 
+  #   - ../vars/all.yaml
   tasks: 
+    # - name: Debug Variables 
+    #   debug: 
+    #     msg: " Message is : {{message}} NFS Server is : {{ nfs_server.ip }}"
     - name: Update apt packages 
       apt: 
         update_cache: yes 
-    - name: Install common packages 
+    - name: Install common packages  
       apt: 
         name: 
           - fish 
           - tree 
         state: present 
-    - name: Install Nfs client 
+    - name: Install Nfs client
+      when: false  
       apt: 
         name: nfs-common 
         state: present 
