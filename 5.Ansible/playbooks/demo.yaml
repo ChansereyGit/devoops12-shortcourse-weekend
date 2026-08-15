@@ -1,0 +1,15 @@
+- name: Testing Playboook 
+  hosts: node2 
+  become: true 
+  tasks: 
+    # sudo apt update && sudo apt ugprade 
+    - name: Update Packages 
+      apt: 
+        update_cache: true
+    - name: Install packages 
+      apt: 
+        name: 
+          - nginx
+          - tree 
+          #- neofetch  
+        state: present # absent(remove)
