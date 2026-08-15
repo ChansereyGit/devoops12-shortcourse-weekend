@@ -4,12 +4,10 @@
   # vars_files: 
   #   - ../vars/all.yaml
   tasks: 
-    # - name: Debug Variables 
-    #   debug: 
-    #     msg: " Message is : {{message}} NFS Server is : {{ nfs_server.ip }}"
     - name: Update apt packages 
+      when: false 
       apt: 
-        update_cache: yes 
+        update_cache: true 
     - name: Install common packages  
       apt: 
         name: 
@@ -17,7 +15,28 @@
           - tree 
         state: present 
     - name: Install Nfs client
-      when: false  
+     # when: false  
       apt: 
         name: nfs-common 
         state: present 
+    - name: Create the directory for mounting 
+      file: 
+        path: "{{ nfs_client.mount_path}}"
+        state: directory 
+        owner: "nobody"
+        group: "nogroup"
+        mode: "0777"
+    - name: Mount the client path to server path 
+      mount: 
+        src: "{{nfs_server.ip}}:{{nfs_server.mount_path}}"
+        path: "{{nfs_client.mount_path}}"
+        fstype: nfs 
+        opts: defaults,_netdev
+        state: mounted
+    - name: Persist the mount ( after restart still recognize the server )
+      mount: 
+        src: "{{nfs_server.ip}}:{{nfs_server.mount_path}}"
+        path: "{{nfs_client.mount_path}}"
+        fstype: nfs 
+        opts: defaults,_netdev
+        state: present
