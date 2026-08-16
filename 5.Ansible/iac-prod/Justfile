@@ -1,0 +1,7 @@
+#!/bin/bash
+
+
+ping-masters: 
+    ansible -m ping masters
+create-masters: 
+    ansible-playbook playbook/create-masters.yaml

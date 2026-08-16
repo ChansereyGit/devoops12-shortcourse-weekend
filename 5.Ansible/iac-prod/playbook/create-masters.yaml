@@ -2,7 +2,7 @@
   hosts: localhost
   become: true 
   vars_files:
-    - ../vars/machine.yaml 
+    - ../vars/machine-info.yaml 
   tasks: 
   - name: Slurp the local public key
     slurp: 
@@ -15,11 +15,12 @@
         - python3-google-auth
       state: present
       update_cache: yes
+
   - name: Create GCP instance
     google.cloud.gcp_compute_instance:
-      name: "{{machine_name}}"
-      machine_type: "e2-medium"
-      zone: "us-central1-a"
+      name: "{{ item.name}}"
+      machine_type: "{{item.machine_type}}"
+      zone: "{{item.zone}}"
       project: "{{google_project_id}}"
       auth_kind: application
       state: present # create machine 
@@ -33,9 +34,9 @@
         - auto_delete: true
           boot: true
           initialize_params:
-            source_image: "projects/ubuntu-os-cloud/global/images/family/ubuntu-2204-lts"
-            disk_size_gb: 15
-            disk_type: "pd-standard"
+            source_image: "{{item.image}}"
+            disk_size_gb: "{{item.disk_size}}"
+            disk_type: "{{item.disk_type}}"
       network_interfaces:
         - network:
             selfLink: "projects/{{google_project_id}}/global/networks/default"
@@ -46,13 +47,19 @@
         items:
           - http-server
           - https-server
-    register: gcp_instance
-    when: true 
+    register: gcp_instances
+    when: item.name in ["master02", "master03"]
     environment: 
         GOOGLE_APPLICATION_CREDENTIALS: "{{ adc_path }}"
         GOOGLE_EXTERNAL_ACCOUNT_ALLOW_EXECUTABLES: "1"
+    loop: "{{ machines_info }}"
+  # used for debug 
   - name: Write gcp_instance into json file
     copy:
-      content: "{{ gcp_instance }}"
-      dest: "./gcp_instance.json"
+      content: "{{ gcp_instances }}"
+      dest: "./gcp_instances.json"
     when: true 
+  - name: Update Inventory using jinjar 
+    template: 
+      src: ../templates/master-template.j2
+      dest: ../inventory.ini 
