@@ -11,3 +11,5 @@ create-masters:
     ansible-playbook playbook/create-masters.yaml
 create-workers: 
     ansible-playbook playbook/create-workers.yaml
+destroy: 
+    ansible-playbook playbook/destroy-all.yaml 
