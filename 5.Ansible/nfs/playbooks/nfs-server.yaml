@@ -1,7 +1,8 @@
 - name: NFS Server playbook 
   hosts: nfs-servers 
   become: true 
-  tasks: 
+  tasks:
+    # sudo apt update && sudo apt upgrade -y  
     - name: Update APT packages 
       apt: 
         update_cache: true 
