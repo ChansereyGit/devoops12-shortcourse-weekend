@@ -1,5 +1,6 @@
 - name: Create GCP Instance 
   hosts: localhost
+  become: true 
   vars_files:
     - ../vars/machine.yaml 
   tasks: 
@@ -45,9 +46,9 @@
         items:
           - http-server
           - https-server
-      register: gcp_instance
-      when: true 
-      environment: 
+    register: gcp_instance
+    when: true 
+    environment: 
         GOOGLE_APPLICATION_CREDENTIALS: "{{ adc_path }}"
         GOOGLE_EXTERNAL_ACCOUNT_ALLOW_EXECUTABLES: "1"
   - name: Write gcp_instance into json file
