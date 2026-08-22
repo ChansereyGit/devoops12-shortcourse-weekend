@@ -2,16 +2,6 @@
   hosts: nfs-servers 
   become: true 
   tasks:
-    # sudo apt update && sudo apt upgrade -y  
-    - name: Update APT packages 
-      apt: 
-        update_cache: true 
-    - name: Install common packages 
-      apt: 
-        name: 
-          - fish 
-          - tree 
-        state: present 
     - name: Install nfs server package 
       apt: 
         name: nfs-kernel-server 
