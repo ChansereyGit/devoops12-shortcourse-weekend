@@ -17,3 +17,11 @@ ansible-playbook -i inventory.ini  \
 ansible-playbook -i inventory.ini  \
     test.yaml --ask-vault-pass
 ```
+
+
+
+```bash 
+
+ansible-galaxy install git+https://github.com/keoKAY/ansible-nfs-role-itp.git,main --roles-path .
+
+```
