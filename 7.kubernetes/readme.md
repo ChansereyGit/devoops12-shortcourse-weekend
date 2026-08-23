@@ -58,6 +58,13 @@ KUBE_EDITOR="nano" kubectl edit svc <service-name>
 
 - Edit the service config in one command. 
 ```bash 
+kubectl get svc 
+kubectl describe svc myapp-svc
+kubectl edit svc myapp-svc 
+
 kubectl patch svc myapp-svc -p '{"spec":{"selector":{"replicas":"green"}}}'
+
+
+
 
 ```
