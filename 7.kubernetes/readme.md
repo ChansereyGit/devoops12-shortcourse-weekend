@@ -49,3 +49,15 @@ kubectl edit deploy/nginx-dpl
 # scale up or down 
 kubectl scale deployment nginx-dpl --replicas=2
 ```
+
+```bash 
+# default editor is vim 
+# if you want to switch to nano 
+KUBE_EDITOR="nano" kubectl edit svc <service-name>
+```
+
+- Edit the service config in one command. 
+```bash 
+kubectl patch svc myapp-svc -p '{"spec":{"selector":{"replicas":"green"}}}'
+
+```
