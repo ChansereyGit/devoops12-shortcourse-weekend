@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: nginx-dpl
 spec:
-  replicas: 4 
+  replicas: 2
   selector:
     matchLabels:
       app: nginx-app
@@ -12,11 +12,10 @@ spec:
       labels:
         app: nginx-app
     spec:
-      nodeSelector: 
-        kubernetes.io/hostname: worker01
-        # disktype: ssd 
+      nodeSelector:
+        disktype: hdd 
       containers:
       - name: nginx-app
-        image: nginx:latest
+        image: nginx:latest 
         ports:
         - containerPort: 80
