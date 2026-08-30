@@ -20,3 +20,14 @@ kubectl taint nodes worker01 service=disabled:NoSchedule
 kubectl taint nodes  worker01 service-
 
 ```
+
+
+## AFFINITY RELATED
+```bash
+# label two machines that has disk-type=ssd 
+kubectl label nodes master01 disktype=ssd
+kubectl label nodes worker01 disktype=ssd 
+kubectl label nodes worker02 disktype=hdd
+
+kubectl taint nodes master01  node-role.kubernetes.io/control-plane-
+```
