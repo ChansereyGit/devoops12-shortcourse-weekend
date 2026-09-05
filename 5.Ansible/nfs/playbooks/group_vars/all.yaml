@@ -1,9 +1,11 @@
 nfs_server: 
-  ip: "{{ hostvars['node1']['private_ip'] }}"
- # ip: "{{ hostvars['node1']['ansible_default_ipv4']['address'] }}"
+  ip:  "{{ hostvars['master01']['private_ip'] }}"
   mount_path: /srv/nfs_shared
 nfs_client:
   mount_path: /mnt/nfs_shared
+  
   ips: 
-    - "{{ hostvars['node2']['ansible_default_ipv4']['address'] }}"
-    - "{{ hostvars['node3']['ansible_default_ipv4']['address'] }}"
+    - "{{ hostvars['master02']['private_ip'] }}"
+    - "{{ hostvars['master03']['private_ip'] }}"
+    - "{{ hostvars['worker01']['private_ip'] }}"
+    - "{{ hostvars['worker02']['private_ip'] }}"

@@ -1,12 +1,11 @@
 nfs_server: 
-  ip: 10.148.0.2
-
-  # if we use this , it's more dynamic and more resuable
-  #ip:  "{{ hostvars['localhost']['ansible_default_ipv4']['address'] }}"
+  ip:  "{{ hostvars['localhost']['private_ip'] }}"
   mount_path: /srv/nfs_shared
 nfs_client:
   mount_path: /mnt/nfs_shared
+  
   ips: 
-    - 10.148.0.5
-    - 10.148.0.4 # ite-server
-
+    - "{{ hostvars['master02']['private_ip'] }}"
+    - "{{ hostvars['master03']['private_ip'] }}"
+    - "{{ hostvars['worker01']['private_ip'] }}"
+    - "{{ hostvars['worker02']['private_ip'] }}"

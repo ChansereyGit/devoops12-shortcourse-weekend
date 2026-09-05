@@ -1,5 +1,5 @@
 - name: Install Nfs client
-  when: false  
+  when: true   
   apt: 
     name: nfs-common 
     state: present 

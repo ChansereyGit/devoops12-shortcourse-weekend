@@ -1,10 +1,10 @@
 - name: Install nfs server package 
-  when: false 
+  when: true  
   apt: 
     name: nfs-kernel-server 
     state: present 
 - name: Create Directory 
-  when: false 
+  when: true 
   file: 
     path: "{{nfs_server.mount_path}}"
     state: directory

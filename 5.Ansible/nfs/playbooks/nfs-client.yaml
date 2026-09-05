@@ -1,5 +1,5 @@
 - name: NFS Client Setup Playbook 
-  hosts: node1
+  hosts: nfs-clients 
   become: true 
   # vars_files: 
   #   - ../vars/all.yaml
@@ -7,5 +7,5 @@
     - name: Run Common Tasks 
       ansible.builtin.import_tasks: ../tasks/common-task.yaml 
     - name: Setup NFS Client 
-      when: false 
+      when: true 
       ansible.builtin.import_tasks: ../tasks/nfs-client-task.yaml 
