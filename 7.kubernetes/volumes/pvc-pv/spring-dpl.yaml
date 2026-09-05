@@ -23,4 +23,5 @@ spec:
       volumes: 
         - name: spring-image-vol
           persistentVolumeClaim: 
-            claimName: spring-pvc-2
+            #claimName: spring-pvc-2
+            claimName: spring-nfs-pvc
